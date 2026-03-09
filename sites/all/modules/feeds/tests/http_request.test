@@ -1,0 +1,467 @@
+<?php
+
+/**
+ * @file
+ * Tests for http_request.inc.
+ */
+
+/**
+ * Tests for the http library.
+ */
+class FeedsHTTPRequestTestCase extends FeedsUnitTestHelper {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'HTTP library',
+      'description' => 'Tests for Feeds HTTP library.',
+      'group' => 'Feeds',
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp() {
+    parent::setUp();
+    feeds_include_library('http_request.inc', 'http_request');
+  }
+
+  /**
+   * Tests http_request_find_feeds().
+   */
+  public function testHTTPRequestFindFeeds() {
+    $html = <<<EOF
+<html>
+  <head>
+    <title>Welcome to Example.com</title>
+    <link rel="stylesheet" type="text/css" media="screen, projection" href="/stuff.css" >
+    <link rel="search"    title="Something" href="//example.com/search">
+    <link rel="alternate" title="Something RSS" href="http://example.com/rss.xml" type="application/rss+xml">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  </head>
+  <body>
+    This is a body.
+  </body>
+</html
+EOF;
+
+    $links = http_request_find_feeds($html);
+    $this->assertEqual(count($links), 1);
+    $this->assertEqual($links[0], 'http://example.com/rss.xml');
+
+    // Test single quoted HTML.
+    $links = http_request_find_feeds(str_replace('"', "'", $html));
+    $this->assertEqual(count($links), 1);
+    $this->assertEqual($links[0], 'http://example.com/rss.xml');
+  }
+
+  /**
+   * Tests fetching data from a protected directory.
+   */
+  public function testProtectedPages() {
+    // Create a directory and put a file in it.
+    $dir = 'public://feeds-protected';
+    file_prepare_directory($dir, FILE_CREATE_DIRECTORY);
+    file_put_contents($dir . '/content.txt', 'A protected document');
+
+    // Create .htpasswd and .htaccess files.
+    file_put_contents($dir . '/.htpasswd', 'Morticia:$apr1$s3SZUBCe$loi5XqSMHJ9CRfsY9GzLW/');
+    $htaccess = "AuthType Basic\nAuthName \"Restricted area\"\nAuthUserFile !path\nrequire valid-user";
+    $htaccess = strtr($htaccess, array(
+      '!path' => drupal_realpath($dir . '/.htpasswd'),
+    ));
+    file_put_contents($dir . '/.htaccess', $htaccess);
+
+    // Create url to file.
+    $url = file_create_url($dir . '/content.txt');
+
+    // Try to access the file without username/password.
+    $result = feeds_http_request($url, array(
+      'cache_http_result' => FALSE,
+    ));
+    // Assert that it was forbidden.
+    $this->assertEqual(401, $result->code);
+    $this->assertNotEqual('A protected document', $result->data);
+
+    // Now access the same with username/password.
+    $result = feeds_http_request($url, array(
+      'username' => 'Morticia',
+      'password' => 'mort',
+      'cache_http_result' => FALSE,
+    ));
+    // And assert that this time the request was successful.
+    $this->assertEqual(200, $result->code);
+    $this->assertEqual('A protected document', $result->data);
+  }
+
+  /**
+   * Tests fetching data from different URLs to check URL validation.
+   */
+  public function testUrlValidation() {
+    // Create a directory and put a file in it.
+    $dir = 'public://feeds-schema-validation';
+    file_prepare_directory($dir, FILE_CREATE_DIRECTORY);
+    file_put_contents($dir . '/content.txt', 'A simple document.');
+
+    // Create url to file.
+    $url = file_create_url($dir . '/content.txt');
+    $result = feeds_http_request($url, array(
+      'cache_http_result' => FALSE,
+    ));
+    // And assert that this time the request was successful.
+    $this->assertEqual(200, $result->code, 'Status code with normal URL is 200.');
+    $this->assertEqual('A simple document.', $result->data, 'Correct content with normal URL.');
+
+    // Change URL with uppercase schema.
+    // Modify http schema to uppercase to check the feeds_http_request function.
+    $uppercase_schema = str_replace('http', 'HTTP', $url);
+    $result = feeds_http_request($uppercase_schema, array(
+      'cache_http_result' => FALSE,
+    ));
+    // And assert that this time the request was successful.
+    $this->assertEqual(200, $result->code, 'Status code with uppercase schema in the URL is 200.');
+    $this->assertEqual('A simple document.', $result->data, 'Correct content with modified URL schema.');
+
+    // Create a URL without schema for the next asserts.
+    $url_without_schema = substr($url, strpos($url, '://'));
+
+    // Assert invalid schema error.
+    $invalid_schema_url = 'invalid' . $url_without_schema;
+    $result = feeds_http_request($invalid_schema_url, array(
+      'cache_http_result' => FALSE,
+    ));
+    // And assert that this time the request was failed.
+    $this->assertEqual(FEEDS_ERROR_INVALID_SCHEME, $result->code, 'Status code with invalid schema asserted.');
+    $this->assertTrue(empty($result->data), 'No content with invalid URL schema.');
+    $this->assertEqual('invalid schema invalid', $result->error, 'Correct error message with invalid URL schema.');
+
+    // Assert no schema error.
+    $no_schema_url = $url_without_schema;
+    $result = feeds_http_request($no_schema_url, array(
+      'cache_http_result' => FALSE,
+    ));
+    // And assert that this time the request was failed.
+    $this->assertEqual(FEEDS_ERROR_NO_SCHEME, $result->code, 'Status code without schema asserted.');
+    $this->assertTrue(empty($result->data), 'No content without URL schema.');
+    $this->assertEqual('missing schema', $result->error, 'Correct error message without URL schema.');
+
+    // Assert unparsed URL.
+    $unparsed_url = 'http:///invalid:url';
+    $result = feeds_http_request($unparsed_url, array(
+      'cache_http_result' => FALSE,
+    ));
+    // And assert that this time the request was failed.
+    $this->assertEqual(FEEDS_ERROR_PARSE_ERROR, $result->code, 'Status code without schema asserted.');
+    $this->assertTrue(empty($result->data), 'No content without URL schema.');
+    $this->assertEqual('unable to parse URL', $result->error, 'Correct error message without URL schema.');
+  }
+
+  /**
+   * Tests http_request_create_absolute_url().
+   */
+  public function testHTTPRequestCreateAbsoluteUrl() {
+    $test_urls = array(
+      // Rels that do not start with "/".
+      array(
+        'rel'    => 'h',
+        'base'   => 'http://www',
+        'expected' => 'http://www/h',
+      ),
+      array(
+        'rel'    => 'h',
+        'base'   => 'http://www/',
+        'expected' => 'http://www/h',
+      ),
+      array(
+        'rel'    => 'h',
+        'base'   => 'http://www/?c;d=e#f',
+        'expected' => 'http://www/h',
+      ),
+      array(
+        'rel'    => 'h',
+        'base'   => 'http://www/a/b',
+        'expected' => 'http://www/a/h',
+      ),
+
+      array(
+        'rel'    => 'h/j',
+        'base'   => 'http://www',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => 'h/j',
+        'base'   => 'http://www/',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => 'h/j',
+        'base'   => 'http://www/?c;d=e#f',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => 'h/j',
+        'base'   => 'http://www/a/b',
+        'expected' => 'http://www/a/h/j',
+      ),
+      array(
+        'rel'    => 'h/j',
+        'base'   => 'http://www/a/b/',
+        'expected' => 'http://www/a/b/h/j',
+      ),
+
+      // Rels that start with "/".
+      array(
+        'rel'    => '/h',
+        'base'   => 'http://www',
+        'expected' => 'http://www/h',
+      ),
+      array(
+        'rel'    => '/h',
+        'base'   => 'http://www/',
+        'expected' => 'http://www/h',
+      ),
+      array(
+        'rel'    => '/h',
+        'base'   => 'http://www/?c;d=e#f',
+        'expected' => 'http://www/h',
+      ),
+      array(
+        'rel'    => '/h',
+        'base'   => 'http://www/a/b',
+        'expected' => 'http://www/h',
+      ),
+
+      array(
+        'rel'    => '/h/j',
+        'base'   => 'http://www',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => '/h/j',
+        'base'   => 'http://www/',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => '/h/j',
+        'base'   => 'http://www/?c;d=e#f',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => '/h/j',
+        'base'   => 'http://www/a/b',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => '/h/j',
+        'base'   => 'http://www/a/b/',
+        'expected' => 'http://www/h/j',
+      ),
+
+      // Rels that contain ".".
+      array(
+        'rel'    => './h',
+        'base'   => 'http://www',
+        'expected' => 'http://www/h',
+      ),
+      array(
+        'rel'    => './h',
+        'base'   => 'http://www/',
+        'expected' => 'http://www/h',
+      ),
+      array(
+        'rel'    => './h',
+        'base'   => 'http://www/?c;d=e#f',
+        'expected' => 'http://www/h',
+      ),
+      array(
+        'rel'    => './h',
+        'base'   => 'http://www/a/b',
+        'expected' => 'http://www/a/h',
+      ),
+
+      array(
+        'rel'    => './h/j',
+        'base'   => 'http://www',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => './h/j',
+        'base'   => 'http://www/',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => './h/j',
+        'base'   => 'http://www/?c;d=e#f',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => './h/j',
+        'base'   => 'http://www/a/b',
+        'expected' => 'http://www/a/h/j',
+      ),
+      array(
+        'rel'    => './h/j',
+        'base'   => 'http://www/a/b/',
+        'expected' => 'http://www/a/b/h/j',
+      ),
+
+      array(
+        'rel'    => 'h/./j',
+        'base'   => 'http://www',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => 'h/./j',
+        'base'   => 'http://www/',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => 'h/./j',
+        'base'   => 'http://www/?c;d=e#f',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => 'h/./j',
+        'base'   => 'http://www/a/b',
+        'expected' => 'http://www/a/h/j',
+      ),
+      array(
+        'rel'    => 'h/./j',
+        'base'   => 'http://www/a/b/',
+        'expected' => 'http://www/a/b/h/j',
+      ),
+
+      array(
+        'rel'    => '/h/./j',
+        'base'   => 'http://www',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => '/h/./j',
+        'base'   => 'http://www/',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => '/h/./j',
+        'base'   => 'http://www/?c;d=e#f',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => '/h/./j',
+        'base'   => 'http://www/a/b',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => '/h/./j',
+        'base'   => 'http://www/a/b/',
+        'expected' => 'http://www/h/j',
+      ),
+
+      // Rels that starts with "../".
+      array(
+        'rel'    => '../h/j',
+        'base'   => 'http://www',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => '../h/j',
+        'base'   => 'http://www/',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => '../h/j',
+        'base'   => 'http://www/?c;d=e#f',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => '../h/j',
+        'base'   => 'http://www/a/b',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => '../h/j',
+        'base'   => 'http://www/a/b/',
+        'expected' => 'http://www/a/h/j',
+      ),
+      array(
+        'rel'    => '../h/j',
+        'base'   => 'http://www/a/b/c/',
+        'expected' => 'http://www/a/b/h/j',
+      ),
+
+      // Rels that start with "../../".
+      array(
+        'rel'    => '../../h/j',
+        'base'   => 'http://www',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => '../../h/j',
+        'base'   => 'http://www/',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => '../../h/j',
+        'base'   => 'http://www/?c;d=e#f',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => '../../h/j',
+        'base'   => 'http://www/a/b',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => '../../h/j',
+        'base'   => 'http://www/a/b/',
+        'expected' => 'http://www/h/j',
+      ),
+      array(
+        'rel'    => '../../h/j',
+        'base'   => 'http://www/a/b/c/',
+        'expected' => 'http://www/a/h/j',
+      ),
+      array(
+        'rel'    => '../../h/j',
+        'base'   => 'http://www/a/b/c/d',
+        'expected' => 'http://www/a/h/j',
+      ),
+
+      // Crazy rels.
+      array(
+        'rel'    => 'h/../../j/./k',
+        'base'   => 'http://www/a/b/c/',
+        'expected' => 'http://www/a/b/j/k',
+      ),
+      array(
+        'rel'    => 'h/../../j/./k',
+        'base'   => 'http://www/a/b/c/d',
+        'expected' => 'http://www/a/b/j/k',
+      ),
+      array(
+        'rel'    => '../../../',
+        'base'   => 'http://www/a/b/c/',
+        'expected' => 'http://www/',
+      ),
+      array(
+        'rel'    => 'h/j/k/../../',
+        'base'   => 'http://www/a/b/c/',
+        'expected' => 'http://www/a/b/c/h',
+      ),
+    );
+
+    foreach ($test_urls as $test_url) {
+      $result_url = http_request_create_absolute_url($test_url['rel'], $test_url['base']);
+      $this->assertEqual($test_url['expected'], $result_url, format_string('Creating an absolute URL from base @base and rel @rel resulted into @expected (actual: @actual).', array(
+        '@actual' => var_export($result_url, TRUE),
+        '@expected' => var_export($test_url['expected'], TRUE),
+        '@rel' => var_export($test_url['rel'], TRUE),
+        '@base' => var_export($test_url['base'], TRUE),
+      )));
+    }
+
+  }
+
+}

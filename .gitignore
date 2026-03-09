@@ -1,0 +1,49 @@
+# Ignore sensitive / environment-specific files
+sites/default/settings*.php
+sites/*/settings*.php
+sites/default/services.yml
+sites/*/services.yml
+
+# Never commit user content or private files
+sites/*/files
+sites/*/private
+
+# Runtime / temp folders Drupal creates
+cache/
+tmp/
+sites/*/files/config_*
+sites/*/files/styles/   # generated image derivatives
+sites/*/files/css/
+sites/*/files/js/
+sites/*/files/php/
+sites/*/files/tmp/
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+*.sublime-*
+.php_cs.cache
+
+# Logs and misc
+*.log
+php_error_log
+error_log
+
+# Drush & backup noise
+*.sql.bz2
+*.sql.gz.bak
+drush-backups/
+
+# Rare in classic D7, but harmless to ignore
+vendor/
+node_modules/
+.sass-cache/
+composer.lock
+
+# Full Drupal core (frozen site → no need to track)
+drupal-7.103/
+current

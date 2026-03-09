@@ -1,0 +1,609 @@
+/**
+ * This file should get overwritten if Method 1 is used. If Method 2 is chosen,
+ * remove this comment and start adding your styles to this file.
+ */
+body {
+  font-family: 'Work Sans', sans-serif !important;
+  line-height: 1.6;
+  color: #4f575c; /* was #8e9396 (too light on white for AA in many cases) */
+}
+
+@media (min-width: 992px) {
+  .col-md-border:not(:last-child) {
+    border-right: 2px solid #ffffff;
+  }
+
+  .col-md-border + .col-md-border {
+    border-left: 2px solid #ffffff;
+    margin-left: -2px;
+  }
+}
+
+.navbar-nav {
+  float: none;
+  margin: 0 auto;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.navbar-nav > li {
+  float: none;
+  display: table-cell;
+  text-align: center;
+}
+
+.navbar-default .navbar-nav > li > a {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.navbar-default {
+  background-color: #fff;
+  border-color: #fff;
+}
+
+/* Make navbar links pass contrast on white */
+.navbar-default .navbar-nav > li > a {
+  color: #2f3a40; /* readable default */
+}
+
+/* Active state: use a darker green (keep bright green for accents instead) */
+.navbar-nav li.active a.active {
+  background: none;
+  color: #2f7d32; /* was #73c25f */
+}
+
+.navbar-nav li.active a.active {
+  background-color: #fff;
+}
+
+/* Hover: use a darker teal/blue that passes on white */
+.navbar-nav li a:hover {
+  color: #0b6f84 !important; /* was #3fc4df */
+}
+
+/* Global accessible link styles (site-wide) */
+a,
+a:visited {
+  color: #0b6f84;
+  text-decoration: underline;
+}
+
+a:hover,
+a:focus {
+  color: #075565;
+  text-decoration: underline;
+}
+
+a:active {
+  color: #064955;
+  text-decoration: underline;
+}
+
+/* Keep visible keyboard focus */
+a:focus {
+  outline: 2px solid #075565;
+  outline-offset: 2px;
+}
+
+/* Accessible link color for main page content (fixes Silktide contrast failures) */
+.main-container a,
+.main-container a:visited {
+  color: #0b6f84 !important;
+  text-decoration: underline;
+}
+
+.main-container a:hover,
+.main-container a:focus {
+  color: #075565 !important;
+  text-decoration: underline;
+}
+
+#stripe {
+  /* fallback */
+  background-color: #73c25f;
+  background-image: url(images/linear_bg_1.png);
+  background-repeat: repeat-y;
+
+  /* Safari 4-5, Chrome 1-9 */
+  background: -webkit-gradient(linear, left top, right top, from(#73c25f), to(#3fc4df));
+
+  /* Safari 5.1, Chrome 10+ */
+  background: -webkit-linear-gradient(left, #73c25f, #3fc4df);
+
+  /* Firefox 3.6+ */
+  background: -moz-linear-gradient(left, #73c25f, #3fc4df);
+
+  /* IE 10 */
+  background: -ms-linear-gradient(left, #73c25f, #3fc4df);
+
+  /* Opera 11.10+ */
+  background: -o-linear-gradient(left, #73c25f, #3fc4df);
+  padding: 10px 0;
+
+}
+
+#stripe h2 {
+  font-family: 'Work Sans', sans-serif !important;
+  color: white;
+  font-size: 16px;
+  line-height: 16px;
+  margin: 0;
+  padding: 0;
+  float: none;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+#stripe ul.secondary {
+  float: left;
+  padding: 0;
+  margin-left: 100px;
+  border: none;
+}
+
+#stripe ul.secondary li {
+  padding: 0;
+}
+
+#stripe ul.secondary li a {
+  padding: 0 15px;
+  color: #fff !important;
+}
+
+#stripe ul.secondary li a:hover {
+  background: transparent !important;
+  color: #fff !important;
+}
+
+.view-home-page-carousel h2, .view-home-page-carousel .field-label {
+  display: none;
+}
+
+/* #block-views-home-page-carousel-block {width:60%;margin-right:32%;margin-left: 8%;}*/
+.view-home-page-carousel img {
+  height: auto;
+  max-width: 100%;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.view-home-page-carousel .field-items {
+  height: auto;
+  width: 100%;
+}
+
+.view-home-page-carousel .carousel-control {
+  background-image: none;   /* remove Bootstrap's dark gradient overlay */
+  background: transparent;  /* ensure no background color */
+  border: 0;                /* because controls are now <button> */
+  box-shadow: none;
+}
+
+.view-home-page-carousel .carousel-control:focus,
+.view-home-page-carousel .carousel-control:hover {
+  background-image: none;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+a.logo > img {
+
+  display: block !important;
+  transform: scale(.75);
+  top: -56px;
+  position: absolute;
+  z-index: 900;
+  left: -79px;
+}
+
+.page-header {
+  font-family: 'Work Sans', sans-serif !important;
+  color: #4f575c; /* was #8e9396 */
+  text-align: center;
+}
+
+#end p {
+  font-size: 12px;
+  margin: 20px 0;
+}
+
+footer {
+  background: #0e76bc;
+  margin-bottom: 20px;
+}
+
+#footer-sitemap {
+  font-weight: 800;
+}
+
+.front h2 {
+  text-align: center;
+  eclear: both;
+  font-family: 'Work Sans', sans-serif !important;;
+  color: #4f575c; /* was #8e9396 */
+  font-weight: 300;
+}
+
+
+.region-home-third .block {
+  position: relative;
+}
+
+.region-home-first .block, .region-home-second .block {
+  position: relative;
+  background: #e7ece6;
+  padding: 5px;
+  float: left;
+}
+
+/*.region-home-first .block { width: 48%; }*/
+/*.region-home-second .block { width: 31.5%; }*/
+/*.region-home-third .block { width: 31.5%; }*/
+/* special */
+#block-block-5 {
+  width: 64%;
+}
+
+#block-block-1 {
+  margin-top: 30px;
+}
+
+.footer .block-menu {
+  width: 120px;
+  float: left;
+}
+
+.footer .block-menu h2 {
+  display: none;
+}
+
+.footer .block-menu li a {
+  color: #fff;
+  font-size: 13px;
+  padding: 5px 0;
+}
+
+.footer .block-menu li a:hover {
+  color: #73c25f;
+  background: transparent;
+}
+
+/* SERVER SPECIFIC */
+
+.view-homepage-images .jcarousel-container {
+  padding: 0 40px;
+}
+
+.view-homepage-images .jcarousel-container .jcarousel-item img {
+  background: #fff;
+  padding: 3px;
+  width: 100%;
+  height: 196px;
+}
+
+#block-views-event-list-homepage-block {
+  width: 64%;
+}
+
+#block-block-5 {
+  float: right;
+  width: auto;
+}
+
+#block-block-5 img {
+  margin: 0 0 0 10px;
+  float: left;
+}
+
+#block-block-6 {
+  margin-top: 30px;
+}
+
+#block-block-11 {
+  border: 1px solid #CCCCCC;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  margin-right: 2px;
+}
+
+#block-block-13 {
+  width: 300px;
+  position: absolute;
+  margin-top: -25em;
+  padding: 15px 10px;
+  height: auto;
+  background: rgba(0, 0, 0, .7);
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 1);
+  font: 16px/23px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  left: 0;
+}
+
+.footer #block-footer-sitemap-footer-sitemap li {
+  width: 120px;
+}
+
+/*.footer #block-footer-sitemap-footer-sitemap li.first { width: 70px; }  */
+.footer #block-footer-sitemap-footer-sitemap li a {
+  color: #fff;
+  font-size: 13px;
+  padding: 5px 0;
+}
+
+.footer #block-footer-sitemap-footer-sitemap li a:hover {
+  color: #73c25f;
+  background: transparent;
+}
+
+/*Updates*/
+.node-type-event-calendar .field-label {
+  float: left;
+  width: 250px;
+  display: block;
+  clear: both;
+}
+
+.node-type-event-calendar .field {
+  margin-top: 10px;
+  padding-top: 5px;
+  border-top: 1px solid #eee;
+}
+
+.view-event-list-homepage .views-field {
+  margin-left: 180px;
+}
+
+.view-event-list-homepage .views-field-title {
+  display: block;
+  width: 150px;
+  float: left;
+  font-weight: bold;
+  margin-left: 0;
+}
+
+.view-event-list-homepage .views-field-name {
+  font-style: italic;
+}
+
+.view-event-list-homepage .views-row {
+  clear: left;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #fff;
+}
+
+/** Blocks **/
+#block-block-7 {
+  position: relative;
+  overflow: hidden;
+}
+
+#block-block-7 iframe, #block-block-7 object, #block-block-7 embed {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#block-aggregator-category-1 h2 {
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
+#block-aggregator-category-1 ul {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #fff;
+  margin-top: 5px;
+}
+
+#block-aggregator-category-1 li {
+  list-style: none;
+  padding: 5px 0;
+  margin: 0 0 5px 0;
+  border-bottom: 1px solid #fff;
+}
+
+#block-aggregator-category-1 .more-link {
+  margin-top: 10px;
+  font-style: italic;
+}
+
+#block-aggregator-feed-1 h2 {
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
+#block-aggregator-feed-1 ul {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #fff;
+  margin-top: 5px;
+}
+
+#block-aggregator-feed-1 li {
+  list-style: none;
+  padding: 5px 0;
+  margin: 0 0 5px 0;
+  border-bottom: 1px solid #fff;
+}
+
+#block-aggregator-feed-1 .more-link {
+  margin-top: 10px;
+  font-style: italic;
+}
+
+#block-block-10 {
+  width: 300px;
+  position: absolute;
+  margin-top: -49em;
+  padding: 15px 10px;
+  height: auto;
+  background: rgba(0, 0, 0, .7);
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 1);
+  font: 16px/23px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  right: 0;
+}
+
+#block-block-10 a,
+#block-block-10 a:visited,
+#block-block-13 a,
+#block-block-13 a:visited {
+  color: #337ab7 !important;
+  text-decoration: underline;
+}
+
+#block-block-10 a:hover,
+#block-block-10 a:focus,
+#block-block-13 a:hover,
+#block-block-13 a:focus {
+  color: #cfefff !important;
+  text-decoration: underline;
+}
+
+
+/*.team-member-title { margin-top:-60px;z-index:100} */
+.entity-profile2 .field-label {
+  float: left;
+  width: 250px;
+  display: block;
+  clear: both;
+}
+
+.entity-profile2 .field {
+  margin-top: 10px;
+  padding-top: 5px;
+  border-top: 1px solid #eee;
+}
+
+.entity-profile2 .field-items {
+  margin-left: 270px;
+}
+
+.node-type-event-calendar .field-items {
+  margin-left: 270px;
+}
+
+/*Event Page Styles */
+.view-clone-of-event-list .views-row {
+  border-top: 1px solid #ddd;
+  padding: 10px 0 20px 0;
+}
+
+.view-clone-of-event-list .views-field-event-calendar-date {
+  font-style: italic;
+  margin-bottom: 5px;
+}
+
+.view-clone-of-event-list .views-field-name {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.view-clone-of-event-list .views-field-country {
+  margin-left: 20px;
+}
+
+/*Countdown Timer */
+
+@media (min-width: 992px) {
+  #block-block-9 {
+    height: 150px;
+    margin-top: -360px;
+    margin-left: 280px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 1px solid black;
+    opacity: 0.9;
+    filter: alpha(opacity=60); /* For IE8 and earlier */
+    border-radius: 25px;
+    width: 48%;
+  }
+
+  .time_circles {
+    color: #ffffff;
+  }
+}
+
+/*Find a Project Tables */
+caption {
+  text-align: left; /* LTR */
+  font-family: 'Work Sans', sans-serif !important;
+  font-weight: 300;
+  font-size: 30px;
+  margin-top: 2em;
+}
+
+.carousel-inner {
+  background-color: #2092a8;
+}
+
+.ui-widget-content {
+  color: #878484;
+}
+
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
+  color: #878484;
+}
+
+.field-name-field-faq .field-label {
+  visibility: hidden;
+}
+
+.former-team-class {
+  margin-top: 80px;
+}
+
+/* Social icon links in block-block-5: display inline (not stacked) */
+#block-block-5 .social-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#block-block-5 .social-links > li {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 8px 0 0; /* spacing between icons */
+  padding: 0;
+}
+
+#block-block-5 .social-links > li:last-child {
+  margin-right: 0;
+}
+
+#block-block-5 .social-links a {
+  display: inline-block; /* keeps the clickable area snug to the icon */
+  line-height: 0;        /* avoids stray inline spacing */
+}
+
+/* Login/form control contrast improvements (WCAG component contrast) */
+/* Login + Request new password form control contrast */
+.page-user-login .form-control,
+.page-user-password .form-control,
+#user-login .form-control,
+#user-pass .form-control {
+  color: #1f2933 !important;
+  background-color: #ffffff !important;
+  border: 2px solid #4b5563 !important;
+}
+
+.page-user-login .form-control:focus,
+.page-user-password .form-control:focus,
+#user-login .form-control:focus,
+#user-pass .form-control:focus {
+  border-color: #0b6f84 !important;
+  box-shadow: 0 0 0 2px rgba(11, 111, 132, 0.25) !important;
+  outline: 2px solid transparent;
+}
