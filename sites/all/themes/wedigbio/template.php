@@ -41,6 +41,25 @@ function wedigbio_preprocess_page(&$variables) {
       array('scope' => 'footer')
     );
   }
+
+  $taxonomy_prefixes = array(
+    'event-keywords/',
+    'geographic-scope/',
+    'tags/',
+    'taxonomic-scope/',
+    'event-status/',
+    'temporal-scope/',
+  );
+
+  foreach ($taxonomy_prefixes as $prefix) {
+    if (strpos($alias, $prefix) === 0) {
+      $term = menu_get_object('taxonomy_term', 2);
+      if ($term && !empty($term->name)) {
+        $variables['title'] = t('Events tagged with !term', array('!term' => check_plain($term->name)));
+      }
+      break;
+    }
+  }
 }
 
 function wedigbio_form_user_login_alter(&$form, &$form_state, $form_id) {
