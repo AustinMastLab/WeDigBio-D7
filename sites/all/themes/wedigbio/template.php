@@ -42,6 +42,7 @@ function wedigbio_preprocess_page(&$variables) {
     );
   }
 
+  // Set the page title to the taxonomy term name if it exists.
   $taxonomy_prefixes = array(
     'event-keywords/',
     'geographic-scope/',
