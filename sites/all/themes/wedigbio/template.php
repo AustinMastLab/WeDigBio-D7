@@ -42,6 +42,13 @@ function wedigbio_preprocess_page(&$variables) {
     );
   }
 
+  if (strpos($alias, 'taxonomic-scope/') === 0) {
+    drupal_add_js(
+      drupal_get_path('theme', 'wedigbio') . '/js/map-link-a11y-fix.js',
+      array('scope' => 'footer')
+    );
+  }
+
   // Set the page title to the taxonomy term name if it exists.
   $taxonomy_prefixes = array(
     'event-keywords/',
