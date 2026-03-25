@@ -169,13 +169,13 @@
 </footer>
 
 <div id="end">
-    <div class="container text-center">
-    <a href="" target="_blank"><img src="/sites/all/themes/wedigbio/img/logo_idigbio.png" alt="iDigBIo" /></a>
-    <a href="" target="_blank"><img src="/sites/default/files/img/am_logo.JPG" alt="AUS" /></a>
-    <a href="" target="_blank"><img src="/sites/all/themes/wedigbio/img/logo_si.png" alt="SI" /></a>
-    <a href="" target="_blank"><img src="/sites/all/themes/wedigbio/img/logo_nsf.png" alt="NSF" /></a>
-    <a href="" target="_blank"><img src="/sites/all/themes/wedigbio/img/logo_uf.png" alt="UF" /></a>
-    <a href="" target="_blank"><img src="/sites/all/themes/wedigbio/img/logo_fsu.png" alt="FSU" /></a>
+  <div class="container text-center">
+    <a href="https://www.idigbio.org/" target="_blank"><img src="/sites/all/themes/wedigbio/img/logo_idigbio.png" alt="iDigBIo" /></a>
+    <a href="https://australian.museum/" target="_blank"><img src="/sites/default/files/img/am_logo.JPG" alt="AUS" /></a>
+    <a href="https://www.si.edu/" target="_blank"><img src="/sites/all/themes/wedigbio/img/logo_si.png" alt="SI" /></a>
+    <a href="https://www.nsf.gov/" target="_blank"><img src="/sites/all/themes/wedigbio/img/logo_nsf.png" alt="NSF" /></a>
+    <a href="https://www.ufl.edu/" target="_blank"><img src="/sites/all/themes/wedigbio/img/logo_uf.png" alt="UF" /></a>
+    <a href="https://fsu.edu" target="_blank"><img src="/sites/all/themes/wedigbio/img/logo_fsu.png" alt="FSU" /></a>
     <p>WeDigBio is funded, in part, by grants from the National Science Foundation [DBI-1115210 (2011-2018), DBI-1547229 (2016-2022), & DBI-2027654 (2021-2026)]. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.</p>
-    </div>
+  </div>
 </div>
