@@ -42,7 +42,7 @@ function wedigbio_preprocess_page(&$variables) {
     );
   }
 
-  if (strpos($alias, 'taxonomic-scope/') === 0) {
+  if (strpos($alias, 'taxonomic-scope/') === 0 || strpos($alias, 'geographic-scope/') === 0) {
     drupal_add_js(
       drupal_get_path('theme', 'wedigbio') . '/js/map-link-a11y-fix.js',
       array('scope' => 'footer')
