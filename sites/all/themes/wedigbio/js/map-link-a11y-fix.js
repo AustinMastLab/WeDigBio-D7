@@ -10,11 +10,16 @@
           return;
         }
 
+        var title = $.trim($article.find("header h2 a").first().text());
+        var eventId = $article.attr("id") ? $article.attr("id").replace("node-", "") : "";
         var label = "Google Maps";
-        var eventTitle = $.trim($article.find("header h2 a").first().text());
 
-        if (eventTitle) {
-          label += " for " + eventTitle;
+        if (title) {
+          label += " for " + title;
+        }
+
+        if (eventId) {
+          label += ", event " + eventId;
         }
 
         $link.attr({

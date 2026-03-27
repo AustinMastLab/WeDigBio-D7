@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Template for event calendar nodes.
+ */
+
+$event_label = $title;
+if (!empty($node->nid)) {
+  $event_label .= ', event ' . $node->nid;
+}
+?>
+
+<article id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
+  <header>
+    <?php if (!$page): ?>
+      <h2<?php print drupal_attributes($title_attributes_array); ?>>
+        <a href="<?php print $node_url; ?>" aria-label="<?php print check_plain($event_label); ?>" title="<?php print check_plain($event_label); ?>">
+          <?php print $title; ?>
+        </a>
+      </h2>
+    <?php else: ?>
+      <h1<?php print drupal_attributes($title_attributes_array); ?>>
+        <?php print $title; ?>
+      </h1>
+    <?php endif; ?>
+
+    <?php if ($display_submitted): ?>
+      <p class="submitted">
+        <?php print $submitted; ?>
+      </p>
+    <?php endif; ?>
+  </header>
+
+  <div class="content"<?php print drupal_attributes($content_attributes_array); ?>>
+    <?php
+    hide($content['links']);
+    hide($content['comments']);
+    print render($content);
+    ?>
+  </div>
+
+<?php print render($content['links']); ?>
+<?php print render($content['comments']); ?>
+  </article><?php
