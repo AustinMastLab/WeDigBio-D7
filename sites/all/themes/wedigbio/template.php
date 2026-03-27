@@ -28,6 +28,10 @@ function wedigbio_preprocess_field(&$variables) {
     return;
   }
 
+  watchdog('wedigbio_debug', 'field_name=@field_name', array(
+    '@field_name' => $variables['element']['#field_name'],
+  ), WATCHDOG_NOTICE);
+
   $taxonomy_types = array(
     'field_keywords' => 'event keyword',
     'field_geographic_scope_of_specim' => 'geographic scope',
@@ -86,6 +90,40 @@ function wedigbio_preprocess_page(&$variables) {
       drupal_get_path('theme', 'wedigbio') . '/js/team-carousel-a11y-fix.js',
       array('scope' => 'footer')
     );
+  }
+
+  if (
+    strpos($alias, 'event-keywords/') === 0 ||
+    strpos($alias, 'geographic-scope/') === 0 ||
+    strpos($alias, 'tags/') === 0 ||
+    strpos($alias, 'taxonomic-scope/') === 0 ||
+    strpos($alias, 'event-status/') === 0 ||
+    strpos($alias, 'temporal-scope/') === 0
+  ) {
+    drupal_add_js(
+      drupal_get_path('theme', 'wedigbio') . '/js/map-link-a11y-fix.js',
+      array('scope' => 'footer')
+    );
+  }
+
+  // Set the page title to the taxonomy term name if it exists.
+  $taxonomy_prefixes = array(
+    'event-keywords/',
+    'geographic-scope/',
+    'tags/',
+    'taxonomic-scope/',
+    'event-status/',
+    'temporal-scope/',
+  );
+
+  foreach ($taxonomy_prefixes as $prefix) {
+    if (strpos($alias, $prefix) === 0) {
+      $term = menu_get_object('taxonomy_term', 2);
+      if ($term && !empty($term->name)) {
+        $variables['title'] = t('Events tagged with !term', array('!term' => check_plain($term->name)));
+      }
+      break;
+    }
   }
 }
 
