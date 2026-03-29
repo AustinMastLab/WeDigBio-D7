@@ -5,7 +5,8 @@
  * Template for event calendar nodes.
  */
 
-$event_label = $title;
+$event_title = trim(strip_tags($title));
+$event_label = $event_title;
 if (!empty($node->nid)) {
   $event_label .= ', event ' . $node->nid;
 }
@@ -16,12 +17,12 @@ if (!empty($node->nid)) {
     <?php if (!$page): ?>
       <h2<?php print drupal_attributes($title_attributes_array); ?>>
         <a href="<?php print $node_url; ?>" aria-label="<?php print check_plain($event_label); ?>" title="<?php print check_plain($event_label); ?>">
-          <?php print $title; ?>
+          <?php print $event_title; ?>
         </a>
       </h2>
     <?php else: ?>
       <h1<?php print drupal_attributes($title_attributes_array); ?>>
-        <?php print $title; ?>
+        <?php print $event_title; ?>
       </h1>
     <?php endif; ?>
 
@@ -40,6 +41,6 @@ if (!empty($node->nid)) {
     ?>
   </div>
 
-<?php print render($content['links']); ?>
-<?php print render($content['comments']); ?>
-  </article><?php
+  <?php print render($content['links']); ?>
+  <?php print render($content['comments']); ?>
+</article>
