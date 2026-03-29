@@ -5,7 +5,7 @@
  * Template for event calendar nodes.
  */
 
-$event_title = trim(strip_tags($title));
+$event_title = html_entity_decode(strip_tags($title), ENT_QUOTES, 'UTF-8');
 $event_label = $event_title;
 if (!empty($node->nid)) {
   $event_label .= ', event ' . $node->nid;
