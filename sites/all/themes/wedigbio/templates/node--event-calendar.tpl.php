@@ -35,6 +35,22 @@ if (!empty($node->nid)) {
 
   <div class="content"<?php print drupal_attributes($content_attributes_array); ?>>
     <?php
+    if (!empty($content['field_event_image'])) {
+      $field_event_image = render($content['field_event_image']);
+
+      if (strpos($field_event_image, '<a ') !== FALSE) {
+        $field_event_image = preg_replace(
+          '/<a\b([^>]*)>/i',
+          '<a$1 aria-label="' . check_plain($event_label) . '" title="' . check_plain($event_label) . '">',
+          $field_event_image,
+          1
+        );
+      }
+
+      print $field_event_image;
+      unset($content['field_event_image']);
+    }
+
     hide($content['links']);
     hide($content['comments']);
     print render($content);
