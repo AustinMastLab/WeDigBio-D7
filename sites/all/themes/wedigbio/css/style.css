@@ -68,6 +68,7 @@ a,
 a:visited {
   color: #0b6f84;
   text-decoration: underline;
+  text-underline-offset: 0.12em;
 }
 
 a:hover,
