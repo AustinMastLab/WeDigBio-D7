@@ -251,26 +251,6 @@ footer {
   margin-top: 30px;
 }
 
-.footer .block-menu {
-  width: 120px;
-  float: left;
-}
-
-.footer .block-menu h2 {
-  display: none;
-}
-
-.footer .block-menu li a {
-  color: #fff;
-  font-size: 13px;
-  padding: 5px 0;
-}
-
-.footer .block-menu li a:hover {
-  color: #73c25f;
-  background: transparent;
-}
-
 /* SERVER SPECIFIC */
 
 .view-homepage-images .jcarousel-container {
@@ -324,22 +304,6 @@ footer {
   left: 0;
 }
 
-.footer #block-footer-sitemap-footer-sitemap li {
-  width: 120px;
-}
-
-/*.footer #block-footer-sitemap-footer-sitemap li.first { width: 70px; }  */
-.footer #block-footer-sitemap-footer-sitemap li a {
-  color: #fff;
-  font-size: 13px;
-  padding: 5px 0;
-}
-
-.footer #block-footer-sitemap-footer-sitemap li a:hover {
-  color: #73c25f;
-  background: transparent;
-}
-
 /*Updates*/
 .node-type-event-calendar .field-label {
   float: left;
@@ -357,13 +321,14 @@ footer {
 /* Taxonomy / event field link lists: give each item its own spacing */
 .node-type-event-calendar .field-type-taxonomy-term-reference .field-items,
 .node-type-event-calendar .field-type-link-field .field-items,
-.taxonomy-term .field-items {
+.node-type-event-calendar .field-name-field-organizer-email .field-items {
   display: block;
+  margin-top: 2px;
 }
 
 .node-type-event-calendar .field-type-taxonomy-term-reference .field-item,
 .node-type-event-calendar .field-type-link-field .field-item,
-.taxonomy-term .field-items .field-item {
+.node-type-event-calendar .field-name-field-organizer-email .field-item {
   display: block;
   margin: 0 0 4px 0;
   padding: 0;
@@ -371,19 +336,11 @@ footer {
 
 .node-type-event-calendar .field-type-taxonomy-term-reference .field-item a,
 .node-type-event-calendar .field-type-link-field .field-item a,
-.taxonomy-term .field-items .field-item a,
-.node-type-event-calendar .field-item a,
-.main-container .field-item a {
+.node-type-event-calendar .field-name-field-organizer-email .field-item a {
   display: inline-block;
   min-height: 24px;
   line-height: 1.4;
   padding: 2px 0;
-}
-
-/* Optional: slightly more room between label and first link */
-.node-type-event-calendar .field-type-taxonomy-term-reference .field-items,
-.node-type-event-calendar .field-type-link-field .field-items {
-  margin-top: 2px;
 }
 
 .view-event-list-homepage .views-field {
@@ -594,29 +551,6 @@ caption {
   margin-top: 80px;
 }
 
-/* Social icon links in block-block-5: display inline (not stacked) */
-#block-block-5 .social-links {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-#block-block-5 .social-links > li {
-  display: inline-block;
-  vertical-align: middle;
-  margin: 0 8px 0 0; /* spacing between icons */
-  padding: 0;
-}
-
-#block-block-5 .social-links > li:last-child {
-  margin-right: 0;
-}
-
-#block-block-5 .social-links a {
-  display: inline-block; /* keeps the clickable area snug to the icon */
-  line-height: 0;        /* avoids stray inline spacing */
-}
-
 /* Login/form control contrast improvements (WCAG component contrast) */
 /* Login + Request new password form control contrast */
 .page-user-login .form-control,
@@ -635,4 +569,111 @@ caption {
   border-color: #0b6f84 !important;
   box-shadow: 0 0 0 2px rgba(11, 111, 132, 0.25) !important;
   outline: 2px solid transparent;
+}
+
+/* FINAL footer + social-link overrides */
+
+footer.footer {
+  text-align: center;
+}
+
+footer.footer .region-footer {
+  text-align: center;
+}
+
+footer.footer #block-footer-sitemap-footer-sitemap {
+  float: none !important;
+  width: 100% !important;
+  margin: 0 auto;
+  text-align: center;
+}
+
+footer.footer #footer-sitemap {
+  display: inline-block;
+  width: auto;
+  margin: 0 auto;
+  text-align: left;
+}
+
+footer.footer #footer-sitemap .fs-block-content,
+footer.footer #footer-sitemap .main-menu {
+  display: inline-block;
+  width: auto;
+  text-align: left;
+}
+
+footer.footer #footer-sitemap .main-menu > ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+footer.footer #footer-sitemap .main-menu > ul > li {
+  float: none !important;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 18px 20px 0;
+  padding: 0;
+  text-align: left;
+}
+
+footer.footer #footer-sitemap .main-menu > ul > li > a {
+  display: block;
+  min-height: 24px;
+  line-height: 1.4;
+  padding: 2px 0;
+}
+
+footer.footer #footer-sitemap .main-menu > ul > li > ul {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+footer.footer #footer-sitemap .main-menu > ul > li > ul > li {
+  margin: 0;
+  padding: 0;
+}
+
+footer.footer #footer-sitemap .main-menu > ul > li > ul > li > a {
+  display: block;
+  min-height: 24px;
+  line-height: 1.4;
+  padding: 2px 0;
+}
+
+footer.footer #footer-sitemap .main-menu > ul > li > a,
+footer.footer #footer-sitemap .main-menu > ul > li > ul > li > a {
+  color: #fff;
+  font-size: 13px;
+  padding: 5px 0;
+}
+
+footer.footer #footer-sitemap .main-menu > ul > li > a:hover,
+footer.footer #footer-sitemap .main-menu > ul > li > ul > li > a:hover {
+  color: #73c25f;
+  background: transparent;
+}
+
+/* Center the social links in the footer */
+footer.footer #block-block-5 {
+  float: none !important;
+  width: 100% !important;
+  clear: both;
+  text-align: center;
+  margin-top: 20px;
+}
+
+footer.footer #block-block-5 .social-links {
+  display: inline-block;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+footer.footer #block-block-5 .social-links > li {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 8px;
+  padding: 0;
 }
