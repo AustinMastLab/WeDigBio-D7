@@ -122,7 +122,6 @@ a:focus {
   /* Opera 11.10+ */
   background: -o-linear-gradient(left, #73c25f, #3fc4df);
   padding: 10px 0;
-
 }
 
 #stripe h2 {
@@ -193,7 +192,6 @@ a:focus {
 }
 
 a.logo > img {
-
   display: block !important;
   transform: scale(.75);
   top: -56px;
@@ -213,115 +211,9 @@ a.logo > img {
   margin: 20px 0;
 }
 
-footer.footer {
+footer {
   background: #0e76bc;
   margin-bottom: 20px;
-}
-
-footer.footer .region-footer {
-  text-align: center;
-  width: 100%;
-}
-
-/* Center the footer sitemap block itself */
-footer.footer #block-footer-sitemap-footer-sitemap {
-  width: 100%;
-  float: none;
-  margin: 0 auto;
-}
-
-footer.footer #footer-sitemap {
-  display: inline-block;
-  width: auto;
-  margin: 0 auto;
-  text-align: left;
-}
-
-/* Keep the top-level menu centered as a group */
-footer.footer #footer-sitemap > .fs-block-content {
-  display: inline-block;
-  width: auto;
-  text-align: left;
-}
-
-/* Top-level menu columns */
-footer.footer #footer-sitemap > .fs-block-content > .main-menu {
-  display: inline-block;
-  width: auto;
-}
-
-footer.footer #footer-sitemap > .fs-block-content > .main-menu > ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  text-align: left;
-}
-
-/* Top-level items behave like columns */
-footer.footer #footer-sitemap > .fs-block-content > .main-menu > ul > li {
-  display: inline-block;
-  vertical-align: top;
-  float: none;
-  margin: 0 18px 20px 0;
-  padding: 0;
-  text-align: left;
-}
-
-/* Nested submenu lists stay stacked under each column heading */
-footer.footer #footer-sitemap > .fs-block-content > .main-menu > ul > li > ul {
-  display: block;
-  margin: 8px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-footer.footer #footer-sitemap > .fs-block-content > .main-menu > ul > li > ul > li {
-  display: block;
-  margin: 0;
-  padding: 0;
-}
-
-/* Tap target sizing without changing the footer layout */
-footer.footer #footer-sitemap a {
-  display: block;
-  min-height: 24px;
-  line-height: 1.4;
-  padding: 2px 0;
-  color: #fff;
-  font-size: 13px;
-}
-
-footer.footer #footer-sitemap a:hover {
-  color: #73c25f;
-  background: transparent;
-}
-
-footer.footer #footer-sitemap a:focus {
-  outline: 2px solid #ffffff;
-  outline-offset: 3px;
-}
-
-/* Keep footer social icons aligned to the right side as before */
-footer.footer #block-block-5 {
-  float: none;
-  width: 100%;
-  clear: both;
-  text-align: center;
-  margin-top: 20px;
-}
-
-footer.footer #block-block-5 .social-links {
-  display: inline-block;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-footer.footer #block-block-5 .social-links > li {
-  display: inline-block;
-  vertical-align: middle;
-  margin: 0 8px;
-  padding: 0;
 }
 
 #footer-sitemap {
@@ -335,7 +227,6 @@ footer.footer #block-block-5 .social-links > li {
   color: #4f575c; /* was #8e9396 */
   font-weight: 300;
 }
-
 
 .region-home-third .block {
   position: relative;
@@ -463,6 +354,36 @@ footer.footer #block-block-5 .social-links > li {
   border-top: 1px solid #eee;
 }
 
+/* Taxonomy / event field link lists: give each item its own spacing */
+.node-type-event-calendar .field-type-taxonomy-term-reference .field-items,
+.node-type-event-calendar .field-type-link-field .field-items,
+.taxonomy-term .field-items {
+  display: block;
+}
+
+.node-type-event-calendar .field-type-taxonomy-term-reference .field-item,
+.node-type-event-calendar .field-type-link-field .field-item,
+.taxonomy-term .field-items .field-item {
+  display: block;
+  margin: 0 0 4px 0;
+  padding: 0;
+}
+
+.node-type-event-calendar .field-type-taxonomy-term-reference .field-item a,
+.node-type-event-calendar .field-type-link-field .field-item a,
+.taxonomy-term .field-items .field-item a {
+  display: inline-block;
+  min-height: 24px;
+  line-height: 1.4;
+  padding: 2px 0;
+}
+
+/* Optional: slightly more room between label and first link */
+.node-type-event-calendar .field-type-taxonomy-term-reference .field-items,
+.node-type-event-calendar .field-type-link-field .field-items {
+  margin-top: 2px;
+}
+
 .view-event-list-homepage .views-field {
   margin-left: 180px;
 }
@@ -579,7 +500,6 @@ footer.footer #block-block-5 .social-links > li {
   color: #cfefff !important;
   text-decoration: underline;
 }
-
 
 /*.team-member-title { margin-top:-60px;z-index:100} */
 .entity-profile2 .field-label {
