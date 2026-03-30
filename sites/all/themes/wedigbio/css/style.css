@@ -371,7 +371,9 @@ footer {
 
 .node-type-event-calendar .field-type-taxonomy-term-reference .field-item a,
 .node-type-event-calendar .field-type-link-field .field-item a,
-.taxonomy-term .field-items .field-item a {
+.taxonomy-term .field-items .field-item a,
+.node-type-event-calendar .field-item a,
+.main-container .field-item a {
   display: inline-block;
   min-height: 24px;
   line-height: 1.4;
