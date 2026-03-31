@@ -677,3 +677,47 @@ footer.footer #block-block-5 .social-links > li {
   margin: 0 8px;
   padding: 0;
 }
+
+/* Field-based link lists: apply spacing across content types */
+.main-container .field-type-taxonomy-term-reference .field-items,
+.main-container .field-type-link-field .field-items {
+  display: block;
+  margin-top: 2px;
+}
+
+.main-container .field-type-taxonomy-term-reference .field-item,
+.main-container .field-type-link-field .field-item {
+  display: block;
+  margin: 0 0 4px 0;
+  padding: 0;
+}
+
+.main-container .field-type-taxonomy-term-reference .field-item a,
+.main-container .field-type-link-field .field-item a {
+  display: inline-block;
+  min-height: 24px;
+  line-height: 1.4;
+  padding: 2px 0;
+}
+
+
+
+/* Space out paragraphs and links in article body content */
+.node-article .field-name-body .field-item p {
+  margin: 0 0 1em 0;
+}
+
+.node-article .field-name-body .field-item a {
+  display: inline-block;
+  min-height: 24px;
+  line-height: 1.4;
+}
+
+.node-article .field-name-body .field-item #ftn1,
+.node-article .field-name-body .field-item #ftn2,
+.node-article .field-name-body .field-item #ftn3,
+.node-article .field-name-body .field-item #ftn4,
+.node-article .field-name-body .field-item #ftn5,
+.node-article .field-name-body .field-item #ftn6 {
+  margin-bottom: 0.75em;
+}
