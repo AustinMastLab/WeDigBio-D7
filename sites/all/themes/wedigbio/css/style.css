@@ -700,6 +700,24 @@ footer.footer #block-block-5 .social-links > li {
   padding: 2px 0;
 }
 
+/* Email fields in content areas */
+.main-container .field-type-email .field-items {
+  display: block;
+  margin-top: 2px;
+}
+
+.main-container .field-type-email .field-item {
+  display: block;
+  margin: 0 0 4px 0;
+  padding: 0;
+}
+
+.main-container .field-type-email .field-item a {
+  display: inline-block;
+  min-height: 24px;
+  line-height: 1.4;
+}
+
 
 
 /* Space out paragraphs and links in article body content */
@@ -721,3 +739,4 @@ footer.footer #block-block-5 .social-links > li {
 .node-article .field-name-body .field-item #ftn6 {
   margin-bottom: 0.75em;
 }
+
