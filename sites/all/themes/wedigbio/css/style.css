@@ -448,7 +448,7 @@ footer {
 #block-block-10 a:visited,
 #block-block-13 a,
 #block-block-13 a:visited {
-  color: #337ab7 !important;
+  color: #e8f7ff !important;
   text-decoration: underline;
 }
 
@@ -456,7 +456,7 @@ footer {
 #block-block-10 a:focus,
 #block-block-13 a:hover,
 #block-block-13 a:focus {
-  color: #cfefff !important;
+  color: #ffffff !important;
   text-decoration: underline;
 }
 
