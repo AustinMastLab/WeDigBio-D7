@@ -740,3 +740,23 @@ footer.footer #block-block-5 .social-links > li {
   margin-bottom: 0.75em;
 }
 
+/* Make teaser/read more links visible on node teaser footer bars */
+.node-teaser footer a,
+.node-teaser footer a:visited,
+.node-teaser .links a,
+.node-teaser .links a:visited,
+.node-teaser .links.list-inline a,
+.node-teaser .links.list-inline a:visited {
+  color: #ffffff !important;
+  text-decoration: underline;
+}
+
+.node-teaser footer a:hover,
+.node-teaser footer a:focus,
+.node-teaser .links a:hover,
+.node-teaser .links a:focus,
+.node-teaser .links.list-inline a:hover,
+.node-teaser .links.list-inline a:focus {
+  color: #e8f7ff !important;
+  text-decoration: underline;
+}
